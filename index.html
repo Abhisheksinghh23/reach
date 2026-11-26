@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Reach: how far can a Bengaluru bus take you?</title>
+<meta name="description" content="Drop a pin, pick a departure time, and see every BMTC bus stop you can reach within your travel budget. Scheduled reach, computed in your browser." />
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='5' fill='%2355f2d0'/><circle cx='16' cy='16' r='11' fill='none' stroke='%2355f2d0' stroke-width='2'/></svg>" />
+</head>
+<body>
+<div id="map" aria-label="Map of Bengaluru"></div>
+<aside id="panel">
+  <button id="collapse" aria-label="Collapse panel">▾</button>
+  <h1>Reach <span>scheduled BMTC bus reach</span></h1>
+  <p class="lede">Drag the pin. Everything lit is reachable by bus and walking within your time budget.</p>
+
+  <div class="row"><label>Day <span class="mut">(weekly timetable pattern)</span></label><div id="days" class="chips"></div><div class="note">Uses BMTC's weekly pattern, valid 9 Nov 2026 to 9 Nov 2027. Holidays, strikes and special-day changes are not in the feed.</div></div>
+  <div class="row">
+    <label for="time">Leave at <b id="timeLabel">09:00</b></label>
+    <div class="timeRow"><button id="play" title="Play through the day">▶</button><input id="time" type="range" min="0" max="1435" step="5" value="540" /></div>
+  </div>
+  <div class="row">
+    <label for="budget">Budget <b id="budgetLabel">45 min</b></label>
+    <input id="budget" type="range" min="10" max="120" step="5" value="45" />
+  </div>
+  <div class="row btns">
+    <button id="addB">+ Add second pin</button>
+    <button id="share" title="Copy a link to this view">Copy link</button>
+  </div>
+  <div id="stats" class="stats"></div>
+  <div class="legend"><span id="legLabelA">0 min</span><i id="legBar"></i><span id="legLabelB">45 min</span></div>
+  <div id="meet"></div>
+  <div id="journey"></div>
+  <div class="profile"><div class="ph">Stops reachable by departure time (pin A)</div><canvas id="profile" height="70"></canvas></div>
+  <p class="fine">Timetable data, not live arrivals: buses run late. Walk 4.5 km/h with a 1.3x street factor, up to 1 km to the first stop, 250 m between stops.
+  Data: <a href="https://github.com/Vonter/bmtc-gtfs" target="_blank" rel="noopener">Vonter/bmtc-gtfs</a> from BMTC, © contributors, under <a href="https://opendatacommons.org/licenses/odbl/1.0/" target="_blank" rel="noopener">ODbL 1.0</a>. The compact data files here are a derived database, also ODbL (<a href="./data/NOTICE.md" target="_blank" rel="noopener">notice</a>).
+  Map: © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> contributors.
+  <a href="https://github.com/Abhisheksinghh23/reach" target="_blank" rel="noopener">Source</a>.</p>
+</aside>
+<div id="loading"><div><div class="spin"></div><p id="loadMsg">Loading timetables…</p></div></div>
+<div id="tip"></div>
+<script type="module" src="/src/main.ts"></script>
+</body>
+</html>
