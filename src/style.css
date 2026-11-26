@@ -59,3 +59,7 @@ input[type=range]{width:100%;accent-color:var(--acc)}
 .dark-tiles{filter:invert(1) hue-rotate(180deg) grayscale(.75) brightness(.78) contrast(.95)}
 .leaflet-container{background:#0c1117}
 .note{font-size:11px;color:#c9d3dc;background:#18222c;border:1px solid var(--line);border-radius:8px;padding:5px 8px;margin-top:6px}.mut{color:var(--mut)}
+
+.leaflet-control-attribution{background:rgba(10,14,19,.8)!important;color:#aab6c1!important}
+.leaflet-control-attribution a{color:#9fdcd0!important}
+@media (max-width:640px){.leaflet-top{top:6px}.leaflet-control-attribution{font-size:10px;max-width:60vw}}

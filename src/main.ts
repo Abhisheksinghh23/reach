@@ -41,15 +41,20 @@ function ramp(f: number): [number, number, number] {
 const rgb = (c: number[], a = 1) => `rgba(${c[0]},${c[1]},${c[2]},${a})`;
 
 // ---------- map ----------
-const map = L.map('map', { zoomControl: false, preferCanvas: true, minZoom: 9, maxZoom: 17 }).setView([12.9716, 77.5946], 11);
-L.control.zoom({ position: 'bottomright' }).addTo(map);
+const map = L.map('map', { zoomControl: false, preferCanvas: true, attributionControl: false, minZoom: 9, maxZoom: 17 }).setView([12.9716, 77.5946], 11);
+const mobile = window.innerWidth <= 640;
+L.control.zoom({ position: mobile ? 'topright' : 'bottomright' }).addTo(map);
+L.control.attribution({ position: mobile ? 'topleft' : 'bottomright', prefix: false }).addTo(map);
 L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
   maxZoom: 19, className: 'dark-tiles', attribution: '© OpenStreetMap contributors',
 }).addTo(map);
 map.setMaxBounds(L.latLngBounds([12.5, 77.2], [13.5, 78.0]).pad(0.5));
-if (!location.hash) map.setView(st.a, 12);
-else map.setView(st.a, 12);
-if (window.innerWidth <= 640) map.panBy([0, 150], { animate: false });
+{
+  // on phones the bottom sheet covers the lower half: centre the pin in the visible top part
+  const sheet = mobile ? window.innerHeight * 0.26 : 0;
+  const c = map.unproject(map.project(st.a, 12).add([0, sheet]), 12);
+  map.setView(c, 12);
+}
 
 const pinIcon = (label: string, cls: string) => L.divIcon({ className: '', html: `<div class="pin ${cls}"><span>${label}</span></div>`, iconSize: [30, 38], iconAnchor: [15, 36] });
 const markerA = L.marker(st.a, { draggable: true, icon: pinIcon('A', 'pa'), zIndexOffset: 1000 }).addTo(map);
